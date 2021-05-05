@@ -14,9 +14,14 @@ class StartScreen:
 
     def setup_ui(self):
         self.start_button = QPushButton(self.app.window)
-        self.start_button.setGeometry(250, 350, 300, 100)
+        self.start_button.setGeometry(250, 300, 300, 100)
         self.start_button.setText("Start")
         self.start_button.clicked.connect(self.__on_start_button_pressed)
+
+        self.exit_button = QPushButton(self.app.window)
+        self.exit_button.setGeometry(250, 600, 300, 100)
+        self.exit_button.setText("Exit")
+        self.exit_button.clicked.connect(self.__on_exit_button_pressed)
 
         self.title_label = QLabel(self.app.window)
         self.title_label.setGeometry(100, 50, 600, 200)
@@ -35,4 +40,7 @@ class StartScreen:
     def __on_start_button_pressed(self):
         self.hide()
         self.app.setup_screen.show()
+
+    def __on_exit_button_pressed(self):
+        self.app.window.close()
 
