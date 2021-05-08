@@ -6,6 +6,7 @@ from src.end_screen import EndScreen
 from src.game_screen import GameScreen
 from src.setup_screen import SetupScreen
 from src.start_screen import StartScreen
+from src.tile_state import TileState
 
 
 class Application:
@@ -13,6 +14,8 @@ class Application:
         self.app = QApplication([])
         self.window = QMainWindow()
         self.window.setGeometry(100, 100, 800, 800)
+
+        self.players_boards = [[[TileState.EMPTY for _ in range(10)] for _ in range(10)] for _ in range(2)]
 
         self.start_screen = StartScreen(self, hidden=False)
         self.setup_screen = SetupScreen(self, hidden=True)

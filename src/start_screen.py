@@ -1,6 +1,7 @@
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QPushButton, QLabel
 from PyQt5.QtCore import Qt
+from src.game_states import GameState
 
 class StartScreen:
     def __init__(self, application, hidden: bool = True):
@@ -31,15 +32,17 @@ class StartScreen:
 
     def show(self):
         self.start_button.show()
+        self.exit_button.show()
         self.title_label.show()
 
     def hide(self):
         self.start_button.hide()
+        self.exit_button.hide()
         self.title_label.hide()
 
     def __on_start_button_pressed(self):
         self.hide()
-        self.app.setup_screen.show()
+        self.app.setup_screen.show(GameState.PLAYER1_PREPARING)
 
     def __on_exit_button_pressed(self):
         self.app.window.close()
