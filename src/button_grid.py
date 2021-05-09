@@ -3,7 +3,7 @@ from src import constants
 
 
 class ButtonGrid:
-    def __init__(self, parent, ax, ay):
+    def __init__(self, parent, ax=0, ay=0):
         self.parent = parent
         self.state = None
         self.functions = {}
@@ -29,3 +29,11 @@ class ButtonGrid:
         for i in range(constants.BOARD_WIDTH):
             for j in range(constants.BOARD_HEIGHT):
                 self.buttons[i][j].hide()
+
+    def set_position(self, ax, ay):
+        for i in range(constants.BOARD_WIDTH):
+            for j in range(constants.BOARD_HEIGHT):
+                self.buttons[i][j].setGeometry(ax+30*j, ay+30*i, 30, 30)
+
+    def set_button_state(self, i, j, state):
+        self.buttons[i][j].setStyleSheet("background-color : yellow")
