@@ -1,3 +1,6 @@
+import time
+from collections import defaultdict
+
 from PyQt5.QtWidgets import QPushButton
 
 from src.special import constants
@@ -10,6 +13,7 @@ class SetupScreen:
         self.app = application
         self.players_boards = None
         self.players_ships = None
+        self.players_ship_count = None
         self.state = None
         self.setup_vars(players_boards)
 
@@ -22,6 +26,7 @@ class SetupScreen:
     def setup_vars(self, players_boards):
         self.players_ships = [{k: v for k, v in constants.SHIP_COUNTS.items()} for _ in range(2)]
         self.players_boards = players_boards
+        self.players_ship_count = [constants.SHIP_COUNT for _ in range(2)]
 
     def setup_ui(self, button_grid):
         self.button_grid = button_grid
@@ -41,15 +46,17 @@ class SetupScreen:
         self.next_button.show()
 
     def hide(self):
+        self.button_grid.reset()
         self.button_grid.hide()
         self.next_button.hide()
 
     def __on_next_button_pressed(self):
-        if self.state == GameState.PLAYER1_PREPARING:
-            self.show(GameState.PLAYER2_PREPARING)
-        elif self.state == GameState.PLAYER2_PREPARING:
-            self.hide()
-            self.app.game_screen.show(GameState.PLAYER1_PLAYING)
+        if self.players_ship_count[GameState.get_player(self.state)] == 0:
+            if self.state == GameState.PLAYER1_PREPARING:
+                self.show(GameState.PLAYER2_PREPARING)
+            elif self.state == GameState.PLAYER2_PREPARING:
+                self.hide()
+                self.app.empty_screen.show(GameState.PLAYER1_PLAYING)
 
     def button_pressed(self, i, j, player):
         added, removed = self.check_ship_placement(i, j, player)
@@ -74,6 +81,7 @@ class SetupScreen:
 
         self.players_ships[player] = new_ships
         new_tile_state = TileState.opposite(self.players_boards[player][i][j])
+        self.players_ship_count[GameState.get_player(self.state)] -= TileState.get_added(new_tile_state)
         self.players_boards[player][i][j] = new_tile_state
         self.button_grid.set_button_state(i, j, new_tile_state)
 
@@ -108,8 +116,8 @@ class SetupScreen:
         return sizes, [sum(sizes) + 1]
 
     def check_side(self, board, i, j, di, dj):
-        if not 0 < i + di < constants.BOARD_HEIGHT or \
-               not 0 < j + dj < constants.BOARD_WIDTH:
+        if not 0 <= i + di < constants.BOARD_HEIGHT or \
+               not 0 <= j + dj < constants.BOARD_WIDTH:
             return 0
 
         if board[i + di][j + dj] != TileState.SHIP:
@@ -117,7 +125,8 @@ class SetupScreen:
 
         # count how long is the ship to that side
         size = 1
-        while 0 < i + size * di + di < constants.BOARD_HEIGHT and \
+        while 0 <= i + size * di + di < constants.BOARD_HEIGHT and \
+                0 <= j + size * dj + dj < constants.BOARD_WIDTH and \
                 board[i + size * di + di][j + size * dj + dj] == TileState.SHIP:
             size += 1
         return size

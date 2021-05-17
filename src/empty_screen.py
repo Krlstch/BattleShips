@@ -1,12 +1,12 @@
 from PyQt5.QtWidgets import QPushButton
-
 from src.special.game_states import GameState
 
 
 class EmptyScreen:
-    def __init__(self, application, hidden=True):
+    def __init__(self, application, button_grid, hidden=True):
         self.app = application
         self.state = None
+        self.button_grid = button_grid
 
         self.setup_ui()
 
@@ -14,7 +14,6 @@ class EmptyScreen:
             self.hide()
         else:
             self.show()
-
 
     def setup_ui(self):
         self.next_button = QPushButton(self.app.window)

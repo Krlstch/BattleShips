@@ -22,3 +22,8 @@ class TileState(enum.Enum):
                 TileState.SHIP: TileState.EMPTY,
                 TileState.EMPTY_SHOT: TileState.SHIP_SHOT,
                 TileState.SHIP_SHOT: TileState.EMPTY_SHOT}[state]
+
+    @staticmethod
+    def get_added(state):
+        return {TileState.EMPTY: -1,
+                TileState.SHIP: 1}[state]

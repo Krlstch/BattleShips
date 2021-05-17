@@ -42,17 +42,17 @@ class ButtonGrid:
 
     def set_button_state(self, i, j, tile_state):
         if tile_state == TileState.EMPTY:
-            self.buttons[i][j].setStyleSheet("background-color : light gray")
+            self.buttons[i][j].setStyleSheet("background-color : gray")
             self.buttons[i][j].setText("")
         elif tile_state == TileState.SHIP:
             if GameState.is_preparing(self.state):
                 self.buttons[i][j].setStyleSheet("background-color : yellow")
                 self.buttons[i][j].setText("")
             else:  # GameState.is_preparing(self.playing):
-                self.buttons[i][j].setStyleSheet("background-color : light gray")
+                self.buttons[i][j].setStyleSheet("background-color : gray")
                 self.buttons[i][j].setText("")
         elif tile_state == TileState.EMPTY_SHOT:
-            self.buttons[i][j].setStyleSheet("background-color : light gray")
+            self.buttons[i][j].setStyleSheet("background-color : gray")
             self.buttons[i][j].setText("X")
         elif tile_state == TileState.SHIP_SHOT:
             self.buttons[i][j].setStyleSheet("background-color : yellow")
@@ -68,3 +68,8 @@ class ButtonGrid:
             else:  # GameState.is_playing(state)
                 self.set_position(50, 100)
         self.state = state
+
+    def reset(self):
+        for i in range(constants.BOARD_HEIGHT):
+            for j in range(constants.BOARD_WIDTH):
+                self.set_button_state(i, j, TileState.EMPTY)
