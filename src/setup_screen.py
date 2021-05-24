@@ -116,15 +116,8 @@ class SetupScreen:
         return sizes, [sum(sizes) + 1]
 
     def check_side(self, board, i, j, di, dj):
-        if not 0 <= i + di < constants.BOARD_HEIGHT or \
-               not 0 <= j + dj < constants.BOARD_WIDTH:
-            return 0
-
-        if board[i + di][j + dj] != TileState.SHIP:
-            return 0  # There is not ship to that side
-
         # count how long is the ship to that side
-        size = 1
+        size = 0
         while 0 <= i + size * di + di < constants.BOARD_HEIGHT and \
                 0 <= j + size * dj + dj < constants.BOARD_WIDTH and \
                 board[i + size * di + di][j + size * dj + dj] == TileState.SHIP:

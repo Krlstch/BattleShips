@@ -8,6 +8,10 @@ class TileState(enum.Enum):
     SHIP_SHOT = 3
 
     @staticmethod
+    def is_empty(state):
+        return state in (TileState.EMPTY, TileState.EMPTY_SHOT)
+
+    @staticmethod
     def is_shot(state):
         return state in (TileState.EMPTY_SHOT, TileState.SHIP_SHOT)
 
