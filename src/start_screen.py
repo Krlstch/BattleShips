@@ -26,7 +26,7 @@ class StartScreen:
         self.exit_button.clicked.connect(self.__on_exit_button_pressed)
 
         self.title_label = QLabel(self.app.window)
-        self.title_label.setGeometry(100, 50, 600, 200)
+        self.title_label.setGeometry(0, 50, 800, 200)
         self.title_label.setText("Battle Ships")
         self.title_label.setAlignment(Qt.AlignCenter)
         self.title_label.setFont(QFont("Arial Font", 80))
