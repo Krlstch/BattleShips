@@ -2,7 +2,7 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QPushButton
 
 from src.label_grid import LabelGrid
-from src.special import constants
+from src.special import constants, utils
 from src.special.game_states import GameState
 from src.special.tile_state import TileState
 
@@ -66,6 +66,9 @@ class GameScreen:
             board = self.players_boards[player]
 
             if not TileState.is_shot(board[i][j]):
+                if self.selected_tile is not None:
+                    s_i, s_j = self.selected_tile
+                    self.button_grid.set_button_state(s_i, s_j, board[s_i][s_j])
                 self.button_grid.set_selected(i, j)
                 self.selected_tile = (i, j)
 
@@ -96,7 +99,6 @@ class GameScreen:
                 size = self.check_if_ship_destroyed(board, s_i, s_j)
                 if size is not False:  # destroyed entire ship
                     self.players_ships[GameState.get_opposite_player(self.state)][size] -= 1
-                    print(self.players_ships)
                     self.shoot_sides_of_ship(board, s_i, s_j)
 
                 if self.players_ships_count[GameState.get_opposite_player(self.state)] == 0:  # if destroyed all ships
@@ -107,8 +109,7 @@ class GameScreen:
     def check_side(self, board, i, j, di, dj):
         # count how long is the ship to that side
         size = 0
-        while 0 <= i + size * di + di < constants.BOARD_HEIGHT and \
-                0 <= j + size * dj + dj < constants.BOARD_WIDTH:
+        while utils.in_bound(i + size * di + di, j + size * dj + dj):
             if board[i + size * di + di][j + size * dj + dj] == TileState.SHIP:
                 return False  # did not destroy entire ship
             if TileState.is_empty(board[i + size * di + di][j + size * dj + dj]):
@@ -129,8 +130,7 @@ class GameScreen:
         self.shoot_sides_of_tile(board, i, j)
         for (di, dj) in ((-1, 0), (1, 0), (0, -1), (0, 1)):
             size = 0
-            while 0 <= i + size * di + di < constants.BOARD_HEIGHT and \
-                    0 <= j + size * dj + dj < constants.BOARD_WIDTH and \
+            while utils.in_bound(i + size * di + di, j + size * dj + dj) and \
                     board[i + size * di + di][j + size * dj + dj] == TileState.SHIP_SHOT:
                 self.shoot_sides_of_tile(board, i + size * di + di, j + size * dj + dj)
                 size += 1
@@ -138,9 +138,8 @@ class GameScreen:
     def shoot_sides_of_tile(self, board, i, j):
         for ddi in (-1, 0, 1):
             for ddj in (-1, 0, 1):
-                if 0 <= i + ddi < constants.BOARD_HEIGHT and \
-                        0 <= j + ddj < constants.BOARD_WIDTH:
-                    if board[i + ddi][j + ddj] == TileState.EMPTY:
-                        board[i + ddi][j + ddj] = TileState.EMPTY_SHOT
-                        self.button_grid.set_button_state(i + ddi, j + ddj,
-                                                          board[i + ddi][j + ddj])
+                if utils.in_bound(i + ddi, j + ddj) and \
+                        board[i + ddi][j + ddj] == TileState.EMPTY:
+                    board[i + ddi][j + ddj] = TileState.EMPTY_SHOT
+                    self.button_grid.set_button_state(i + ddi, j + ddj,
+                                                      board[i + ddi][j + ddj])

@@ -1,12 +1,10 @@
-import time
-from collections import defaultdict
 
 from PyQt5.QtWidgets import QPushButton
 
 from src.special import constants
 from src.special.game_states import GameState
 from src.special.tile_state import TileState
-
+from src.special import utils
 
 class SetupScreen:
     def __init__(self, application, players_boards, button_grid, hidden=True):
@@ -95,7 +93,7 @@ class SetupScreen:
     def add_ship(self, i, j, board):
         # check if there are already ships on the corners (if corners exist)
         for n_i, n_j in [(i + 1, j + 1), (i + 1, j - 1), (i - 1, j - 1), (i - 1, j + 1)]:
-            if 0 <= n_i < constants.BOARD_HEIGHT and 0 <= n_j < constants.BOARD_WIDTH:
+            if utils.in_bound(n_i, n_j):
                 if board[n_i][n_j] != TileState.EMPTY:
                     return False, False  # there is a ship on any corner
 
@@ -118,8 +116,7 @@ class SetupScreen:
     def check_side(self, board, i, j, di, dj):
         # count how long is the ship to that side
         size = 0
-        while 0 <= i + size * di + di < constants.BOARD_HEIGHT and \
-                0 <= j + size * dj + dj < constants.BOARD_WIDTH and \
+        while utils.in_bound(i+size*di+di, j+size*dj+dj) and \
                 board[i + size * di + di][j + size * dj + dj] == TileState.SHIP:
             size += 1
         return size
