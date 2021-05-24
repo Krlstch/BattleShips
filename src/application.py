@@ -21,13 +21,15 @@ class Application:
         self.players_boards = [[[TileState.EMPTY for _ in range(constants.BOARD_WIDTH)] for _ in range(constants.BOARD_HEIGHT)] for _ in range(2)]
         self.button_grid = ButtonGrid(self.window)
 
-        self.start_screen = StartScreen(self, hidden=False)
+        self.start_screen = StartScreen(self, hidden=True)
         self.setup_screen = SetupScreen(self, self.players_boards, self.button_grid, hidden=True)
         self.game_screen = GameScreen(self, self.players_boards, self.button_grid, hidden=True)
         self.empty_screen = EmptyScreen(self, self.button_grid, hidden=True)
         self.end_screen = EndScreen(self, hidden=True)
 
+    def run(self):
         self.window.show()
+        self.start_screen.show()
         sys.exit(self.app.exec())
 
     def reset_vars(self):

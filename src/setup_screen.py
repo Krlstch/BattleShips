@@ -67,14 +67,14 @@ class SetupScreen:
         for ship in added:
             if ship != 0:
                 if ship not in new_ships:
-                    return False
+                    return False  # would create too large ship
                 new_ships[ship] -= 1
         for ship in removed:
             if ship != 0:
                 new_ships[ship] += 1
 
         ssum = 0
-        for k in range(4, 0, -1):
+        for k in range(constants.LARGEST, constants.SMALLEST - 1, -1):
             ssum += new_ships[k]
             if ssum < 0:
                 return False

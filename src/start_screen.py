@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QPushButton, QLabel
 from PyQt5.QtCore import Qt
 from src.special.game_states import GameState
 
+
 class StartScreen:
     def __init__(self, application, hidden: bool = True):
         self.app = application
