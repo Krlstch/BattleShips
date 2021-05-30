@@ -10,6 +10,7 @@ from src.special import constants
 from src.start_screen import StartScreen
 from src.special.tile_state import TileState
 from src.button_grid import ButtonGrid
+from src.counter import Counter
 
 
 class Application:
@@ -17,6 +18,8 @@ class Application:
         self.app = QApplication([])
         self.window = QMainWindow()
         self.window.setGeometry(100, 100, 800, 800)
+
+        self.counter_own = Counter(self.window, ax=400, ay=450)
 
         self.players_boards = [[[TileState.EMPTY for _ in range(constants.BOARD_WIDTH)] for _ in range(constants.BOARD_HEIGHT)] for _ in range(2)]
         self.button_grid = ButtonGrid(self.window)
