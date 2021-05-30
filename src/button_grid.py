@@ -38,7 +38,7 @@ class ButtonGrid:
     def set_position(self, ax, ay):
         for i in range(constants.BOARD_WIDTH):
             for j in range(constants.BOARD_HEIGHT):
-                self.buttons[i][j].setGeometry(ax+30*j, ay+30*i, 30, 30)
+                self.buttons[i][j].move(ax+30*j, ay+30*i)
 
     def set_button_state(self, i, j, tile_state):
         if tile_state == TileState.EMPTY:
@@ -62,7 +62,7 @@ class ButtonGrid:
         self.buttons[i][j].setStyleSheet("background-color : red")
 
     def set_state(self, state):
-        if self.state != state:
+        if not GameState.is_same_phase(self.state, state):
             if GameState.is_preparing(state):
                 self.set_position(50, 450)
             else:  # GameState.is_playing(state)

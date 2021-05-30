@@ -39,6 +39,12 @@ class GameState(enum.Enum):
                 GameState.PLAYER2_PREPARING: 0,
                 GameState.PLAYER1_PLAYING: 1,
                 GameState.PLAYER2_PLAYING: 0}[state]
+
+    @staticmethod
+    def is_same_phase(state1, state2):
+        return (GameState.is_playing(state1) and GameState.is_playing(state2)) or \
+            (GameState.is_preparing(state1) and GameState.is_preparing(state2))
+
     @staticmethod
     def next_state(state):
         return {GameState.PLAYER1_PREPARING: GameState.PLAYER2_PREPARING,

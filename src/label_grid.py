@@ -9,10 +9,8 @@ class LabelGrid:
     def __init__(self, parent, ax=0, ay=0):
         self.parent = parent
         self.state = None
-        self.functions = {}
 
-        self.labels = [[QLabel(self.parent) for j in range(constants.BOARD_HEIGHT)] for i in range(
-            constants.BOARD_WIDTH)]
+        self.labels = [[QLabel(self.parent) for j in range(constants.BOARD_HEIGHT)] for i in range(constants.BOARD_WIDTH)]
         for i in range(constants.BOARD_WIDTH):
             for j in range(constants.BOARD_HEIGHT):
                 self.labels[i][j].setGeometry(ax+30*j + 1, ay+30*i + 1, 28, 28)
@@ -34,7 +32,7 @@ class LabelGrid:
     def set_position(self, ax, ay):
         for i in range(constants.BOARD_WIDTH):
             for j in range(constants.BOARD_HEIGHT):
-                self.labels[i][j].setGeometry(ax+30*j + 1, ay+30*i + 1, 28, 28)
+                self.labels[i][j].move(ax+30*j + 1, ay+30*i + 1)
 
     def set_label_state(self, i, j, tile_state):
         if tile_state == TileState.EMPTY:
