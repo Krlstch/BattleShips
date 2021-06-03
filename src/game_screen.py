@@ -8,7 +8,7 @@ from src.special.tile_state import TileState
 
 
 class GameScreen:
-    def __init__(self, application, players_boards, button_grid, hidden=True):
+    def __init__(self, application, players_boards, button_grid, counter_own, counter_opp, hidden=True):
         self.app = application
 
         self.players_boards = None
@@ -20,7 +20,7 @@ class GameScreen:
         self.already_shot = None
         self.setup_vars(players_boards)
 
-        self.setup_ui(button_grid)
+        self.setup_ui(button_grid, counter_own, counter_opp)
         if hidden:
             self.hide()
         else:
@@ -32,10 +32,14 @@ class GameScreen:
         self.players_ships = [{k: v for k, v in constants.SHIP_COUNTS.items()} for _ in range(2)]
         self.players_boards = players_boards
 
-    def setup_ui(self, button_grid):
+    def setup_ui(self, button_grid, counter_own, counter_opp):
         self.button_grid = button_grid
         self.button_grid.add_function(GameState.PLAYER1_PLAYING, lambda i, j: self.button_pressed(i, j, 1))
         self.button_grid.add_function(GameState.PLAYER2_PLAYING, lambda i, j: self.button_pressed(i, j, 0))
+
+        self.counter_own = counter_own
+
+        self.counter_opp = counter_opp
 
         self.label_grid = LabelGrid(self.app.window, ax=50, ay=450)
 
@@ -50,6 +54,8 @@ class GameScreen:
         opponent_board = self.players_boards[GameState.get_opposite_player(state)]
 
         self.button_grid.show(opponent_board, state)
+        self.counter_own.show()
+        self.counter_opp.show()
         self.label_grid.show(board, GameState.opposite(state))
         self.next_button.setText("Shoot")
         self.next_button.show()
@@ -58,6 +64,8 @@ class GameScreen:
 
     def hide(self):
         self.button_grid.hide()
+        self.counter_own.hide()
+        self.counter_opp.hide()
         self.label_grid.hide()
         self.next_button.hide()
 

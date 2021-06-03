@@ -73,7 +73,7 @@ class ButtonGrid:
             if GameState.is_preparing(state):
                 self.set_position(50, 450)
             else:  # GameState.is_playing(state)
-                self.set_position(50, 100)
+                self.set_position(50, 50)
         self.state = state
 
     def reset(self):

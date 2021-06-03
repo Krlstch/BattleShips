@@ -6,8 +6,9 @@ from src.special.game_states import GameState
 from src.special.tile_state import TileState
 from src.special import utils
 
+
 class SetupScreen:
-    def __init__(self, application, players_boards, button_grid, hidden=True):
+    def __init__(self, application, players_boards, button_grid, counter, hidden=True):
         self.app = application
         self.players_boards = None
         self.players_ships = None
@@ -15,7 +16,7 @@ class SetupScreen:
         self.state = None
         self.setup_vars(players_boards)
 
-        self.setup_ui(button_grid)
+        self.setup_ui(button_grid, counter)
         if hidden:
             self.hide()
         else:
@@ -26,10 +27,12 @@ class SetupScreen:
         self.players_boards = players_boards
         self.players_ship_count = [constants.SHIP_COUNT for _ in range(2)]
 
-    def setup_ui(self, button_grid):
+    def setup_ui(self, button_grid, counter):
         self.button_grid = button_grid
         self.button_grid.add_function(GameState.PLAYER1_PREPARING, lambda i, j: self.button_pressed(i, j, 0))
         self.button_grid.add_function(GameState.PLAYER2_PREPARING, lambda i, j: self.button_pressed(i, j, 1))
+
+        self.counter = counter
 
         self.next_button = QPushButton(self.app.window)
         self.next_button.setGeometry(550, 650, 200, 100)
@@ -38,14 +41,14 @@ class SetupScreen:
 
     def show(self, state=GameState.PLAYER1_PREPARING):
         self.state = state
-        board = self.players_boards[GameState.get_player(state)]
-        self.button_grid.show(board, state)
 
+        self.button_grid.show(self.players_boards[GameState.get_player(state)], state)
+        self.counter.show()
         self.next_button.show()
 
     def hide(self):
-        self.button_grid.reset()
         self.button_grid.hide()
+        self.counter.hide()
         self.next_button.hide()
 
     def __on_next_button_pressed(self):
