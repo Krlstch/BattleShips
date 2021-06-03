@@ -10,21 +10,26 @@ class LabelGrid:
         self.parent = parent
         self.state = None
 
-        self.labels = [[QLabel(self.parent) for j in range(constants.BOARD_HEIGHT)] for i in range(constants.BOARD_WIDTH)]
+        self.background_label = QLabel(self.parent)
+        self.background_label.setGeometry(ax-1, ay-1, 303, 303)
+        self.background_label.setStyleSheet("background-color: black")
+
+        self.labels = [[QLabel(self.parent) for j in range(constants.BOARD_HEIGHT)] for _ in range(constants.BOARD_WIDTH)]
         for i in range(constants.BOARD_WIDTH):
             for j in range(constants.BOARD_HEIGHT):
-                self.labels[i][j].setGeometry(ax+30*j + 1, ay+30*i + 1, 28, 28)
+                self.labels[i][j].setGeometry(ax+30*j + 1, ay+30*i + 1, 29, 29)
                 self.labels[i][j].setAlignment(Qt.AlignCenter)
-                #self.labels[i][j].setStyleSheet("border: 1px solid black;")
 
     def show(self, board, state):
         self.set_state(state)
+        self.background_label.show()
         for i in range(constants.BOARD_WIDTH):
             for j in range(constants.BOARD_HEIGHT):
                 self.set_label_state(i, j, board[i][j])
                 self.labels[i][j].show()
 
     def hide(self):
+        self.background_label.hide()
         for i in range(constants.BOARD_WIDTH):
             for j in range(constants.BOARD_HEIGHT):
                 self.labels[i][j].hide()

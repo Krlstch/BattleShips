@@ -12,8 +12,8 @@ class Counter:
         self.labels = [[QLabel(self.parent) for j in range(ship_size+1)] for ship_size in range(constants.SHIP_TYPES_COUNT)]
         for i in range(constants.SHIP_TYPES_COUNT):
             for j in range(i+1):
-                self.labels[i][j].setGeometry(ax + 30*j + 1, ay + 50*(constants.SHIP_TYPES_COUNT-i-1) + 1, 28, 28)
-                self.labels[i][j].setStyleSheet("background-color : yellow")
+                self.labels[i][j].setGeometry(ax + 35*j + 1, ay + 35*(constants.SHIP_TYPES_COUNT-i-1) + 1, 28, 28)
+                self.labels[i][j].setStyleSheet("background-color : yellow; border: 1px solid black")
 
     def show(self):
         for i in range(constants.SHIP_TYPES_COUNT):

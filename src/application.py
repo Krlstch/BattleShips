@@ -18,8 +18,10 @@ class Application:
         self.app = QApplication([])
         self.window = QMainWindow()
         self.window.setGeometry(100, 100, 800, 800)
+        #self.window.setStyleSheet("background-color: blue")
 
         self.counter_own = Counter(self.window, ax=400, ay=450)
+        #self.counter_opp = Counter(self.window, ax=)
 
         self.players_boards = [[[TileState.EMPTY for _ in range(constants.BOARD_WIDTH)] for _ in range(constants.BOARD_HEIGHT)] for _ in range(2)]
         self.button_grid = ButtonGrid(self.window)
