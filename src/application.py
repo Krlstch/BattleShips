@@ -1,10 +1,9 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
+from PyQt5.QtWidgets import QApplication, QMainWindow
 import sys
 
 from src.empty_screen import EmptyScreen
 from src.end_screen import EndScreen
 from src.game_screen import GameScreen
-from src.widgets.label_grid import LabelGrid
 from src.setup_screen import SetupScreen
 from src.special import constants
 from src.start_screen import StartScreen

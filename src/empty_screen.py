@@ -8,18 +8,17 @@ class EmptyScreen:
         self.state = None
         self.button_grid = button_grid
 
-        self.setup_ui()
+        self.__setup_ui()
 
         if hidden:
             self.hide()
         else:
             self.show()
 
-    def setup_ui(self):
+    def __setup_ui(self):
         self.next_button = QPushButton(self.app.window)
         self.next_button.setGeometry(200, 300, 400, 200)
         self.next_button.setText("Next")
-        # self.next_button.setFont(QFont("Arial Font", 20))
         self.next_button.clicked.connect(self.__on_next_button_pressed)
 
     def show(self, state=GameState.EMPTY_BEFORE_PLAYER2_PLAY):

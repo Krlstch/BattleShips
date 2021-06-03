@@ -9,14 +9,13 @@ class EndScreen:
     def __init__(self, application, hidden=True):
         self.app = application
 
-        self.setup_ui()
+        self.__setup_ui()
         if hidden:
             self.hide()
         else:
             self.show()
 
-
-    def setup_ui(self):
+    def __setup_ui(self):
         self.exit_button = QPushButton(self.app.window)
         self.exit_button.setGeometry(250, 600, 300, 100)
         self.exit_button.setText("Back to main menu")
@@ -28,7 +27,7 @@ class EndScreen:
         self.title_label.setFont(QFont("Arial Font", 80))
 
     def show(self, state=GameState.PLAYER1_PLAYING):
-        self.title_label.setText(f"Player {GameState.get_player(state)+1} won")
+        self.title_label.setText(f"Player {GameState.get_player(state) + 1} won")
 
         self.exit_button.show()
         self.title_label.show()

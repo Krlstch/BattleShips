@@ -7,14 +7,14 @@ from src.special.game_states import GameState
 class StartScreen:
     def __init__(self, application, hidden: bool = True):
         self.app = application
-        self.setup_ui()
+        self.__setup_ui()
 
         if hidden:
             self.hide()
         else:
             self.show()
 
-    def setup_ui(self):
+    def __setup_ui(self):
         self.start_button = QPushButton(self.app.window)
         self.start_button.setGeometry(250, 300, 300, 100)
         self.start_button.setText("Start")
@@ -47,4 +47,3 @@ class StartScreen:
 
     def __on_exit_button_pressed(self):
         self.app.window.close()
-
