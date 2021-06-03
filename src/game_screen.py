@@ -55,7 +55,9 @@ class GameScreen:
 
         self.button_grid.show(opponent_board, state)
         self.counter_own.show()
+        self.counter_own.set_counts(self.players_ships[GameState.get_player(state)])
         self.counter_opp.show()
+        self.counter_opp.set_counts(self.players_ships[GameState.get_opposite_player(state)])
         self.label_grid.show(board, GameState.opposite(state))
         self.next_button.setText("Shoot")
         self.next_button.show()
@@ -107,6 +109,7 @@ class GameScreen:
                 size = self.check_if_ship_destroyed(board, s_i, s_j)
                 if size is not False:  # destroyed entire ship
                     self.players_ships[GameState.get_opposite_player(self.state)][size] -= 1
+                    self.counter_opp.set_counts(self.players_ships[GameState.get_opposite_player(self.state)])
                     self.shoot_sides_of_ship(board, s_i, s_j)
 
                 if self.players_ships_count[GameState.get_opposite_player(self.state)] == 0:  # if destroyed all ships
