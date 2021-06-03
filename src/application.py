@@ -4,13 +4,13 @@ import sys
 from src.empty_screen import EmptyScreen
 from src.end_screen import EndScreen
 from src.game_screen import GameScreen
-from src.label_grid import LabelGrid
+from src.widgets.label_grid import LabelGrid
 from src.setup_screen import SetupScreen
 from src.special import constants
 from src.start_screen import StartScreen
 from src.special.tile_state import TileState
-from src.button_grid import ButtonGrid
-from src.counter import Counter
+from src.widgets.button_grid import ButtonGrid
+from src.widgets.counter import Counter
 
 
 class Application:

@@ -1,7 +1,7 @@
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QPushButton
 
-from src.label_grid import LabelGrid
+from src.widgets.label_grid import LabelGrid
 from src.special import constants, utils
 from src.special.game_states import GameState
 from src.special.tile_state import TileState
