@@ -34,6 +34,7 @@ class SetupScreen:
 
         self.counter = counter
 
+
         self.next_button = QPushButton(self.app.window)
         self.next_button.setGeometry(550, 650, 200, 100)
         self.next_button.setText("Next")
@@ -44,6 +45,7 @@ class SetupScreen:
 
         self.button_grid.show(self.players_boards[GameState.get_player(state)], state)
         self.counter.show()
+        self.counter.set_counts(self.players_ships[GameState.get_player(state)])
         self.next_button.show()
 
     def hide(self):
@@ -85,6 +87,7 @@ class SetupScreen:
         self.players_ship_count[GameState.get_player(self.state)] -= TileState.get_added(new_tile_state)
         self.players_boards[player][i][j] = new_tile_state
         self.button_grid.set_button_state(i, j, new_tile_state)
+        self.counter.set_counts(new_ships)
 
     def check_ship_placement(self, i, j, player):
         board = self.app.players_boards[player]

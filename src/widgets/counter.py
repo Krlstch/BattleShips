@@ -41,3 +41,7 @@ class Counter:
             self.background_labels[i].setGeometry(ax-1, ay-1 + 35*(constants.SHIP_TYPES_COUNT-i-1))
             for j in range(i+1):
                 self.labels[i][j].move(ax + 30*j + 1, ay + 50*(constants.SHIP_TYPES_COUNT-i+1) + 1)
+
+    def set_counts(self, ships):
+        for i in range(constants.SHIP_TYPES_COUNT):
+            self.counter_labels[i].setText(f"x {ships[i+1]}")
