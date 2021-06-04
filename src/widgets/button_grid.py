@@ -11,7 +11,7 @@ class ButtonGrid:
         self.functions = {}
 
         self.background_label = QLabel(self.parent)
-        self.background_label.setGeometry(ax-2, ay-2, 303, 303)
+        self.background_label.setGeometry(ax-2, ay-2, 30*constants.BOARD_WIDTH+3, 30*constants.BOARD_WIDTH+3)
         self.background_label.setStyleSheet("background-color: black")
 
         self.buttons = [[QPushButton(self.parent) for j in range(constants.BOARD_HEIGHT)] for i in range(constants.BOARD_WIDTH)]
