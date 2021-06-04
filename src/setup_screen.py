@@ -119,4 +119,5 @@ class SetupScreen:
         for k in range(constants.LARGEST, constants.SMALLEST - 1, -1):
             ssum += new_ships[k]
             if ssum < 0:
-                return False
+                return True
+        return False

@@ -12,36 +12,36 @@ class Counter:
         self.background_labels = [QLabel(self.parent) for _ in range(constants.SHIP_TYPES_COUNT)]
         self.labels = [[QLabel(self.parent) for _ in range(ship_size + 1)] for ship_size in range(constants.SHIP_TYPES_COUNT)]
         self.counter_labels = [QLabel(self.parent) for _ in range(constants.SHIP_TYPES_COUNT)]
-        for i in range(constants.SHIP_TYPES_COUNT):
-            self.background_labels[i].setGeometry(ax-1, ay-1 + 35*(constants.SHIP_TYPES_COUNT-i-1), 30*(i+1)+1, 31)
-            self.background_labels[i].setStyleSheet("background-color : black")
+        for i, (background_label, counter_label, label_row) in enumerate(zip(self.background_labels, self.counter_labels, self.labels)):
+            background_label.setGeometry(ax-1, ay-1 + 35*(constants.SHIP_TYPES_COUNT-i-1), 30*(i+1)+1, 31)
+            background_label.setStyleSheet("background-color : black")
 
-            self.counter_labels[i].setGeometry(ax+30*(i+1)+10, ay-1 + 35*(constants.SHIP_TYPES_COUNT-i-1), 30*(i+1)+1, 31)
-            self.counter_labels[i].setText("x 0")
-            for j in range(i+1):
-                self.labels[i][j].setGeometry(ax + 30*j, ay + 35*(constants.SHIP_TYPES_COUNT-i-1), 29, 29)
-                self.labels[i][j].setStyleSheet("background-color : yellow")
+            counter_label.setGeometry(ax+30*(i+1)+10, ay-1 + 35*(constants.SHIP_TYPES_COUNT-i-1), 30*(i+1)+1, 31)
+            for j, label in enumerate(label_row):
+                label.setGeometry(ax + 30*j, ay + 35*(constants.SHIP_TYPES_COUNT-i-1), 29, 29)
+                label.setStyleSheet("background-color : yellow")
 
     def show(self):
-        for i in range(constants.SHIP_TYPES_COUNT):
-            self.background_labels[i].show()
-            self.counter_labels[i].show()
-            for j in range(i+1):
-                self.labels[i][j].show()
+        for background_label, counter_label, label_row in zip(self.background_labels, self.counter_labels, self.labels):
+            background_label.show()
+            counter_label.show()
+            for label in label_row:
+                label.show()
 
     def hide(self):
-        for i in range(constants.SHIP_TYPES_COUNT):
-            self.background_labels[i].hide()
-            self.counter_labels[i].hide()
-            for j in range(i+1):
-                self.labels[i][j].hide()
+        for background_label, counter_label, label_row in zip(self.background_labels, self.counter_labels, self.labels):
+            background_label.hide()
+            counter_label.hide()
+            for label in label_row:
+                label.hide()
 
     def set_position(self, ax, ay):
-        for i in range(constants.SHIP_TYPES_COUNT):
-            self.background_labels[i].setGeometry(ax-1, ay-1 + 35*(constants.SHIP_TYPES_COUNT-i-1))
-            for j in range(i+1):
-                self.labels[i][j].move(ax + 30*j + 1, ay + 50*(constants.SHIP_TYPES_COUNT-i+1) + 1)
+        for i, (background_label, counter_label, label_row) in enumerate(zip(self.background_labels, self.counter_labels, self.labels)):
+            background_label.move(ax-1, ay-1 + 35*(constants.SHIP_TYPES_COUNT-i-1))
+            counter_label.move(ax+30*(i+1)+10, ay-1 + 35*(constants.SHIP_TYPES_COUNT-i-1))
+            for j, label in enumerate(label_row):
+                label.move(ax + 30*j + 1, ay + 50*(constants.SHIP_TYPES_COUNT-i+1) + 1)
 
     def set_counts(self, ships):
-        for i in range(constants.SHIP_TYPES_COUNT):
-            self.counter_labels[i].setText(f"x {ships[i+1]}")
+        for i, counter_label in enumerate(self.counter_labels):
+            counter_label.setText(f"x {ships[i+1]}")
